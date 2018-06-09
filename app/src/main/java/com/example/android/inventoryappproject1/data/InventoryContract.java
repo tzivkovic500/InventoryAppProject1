@@ -32,31 +32,31 @@ public final class InventoryContract {
          *
          * Type: TEXT
          */
-        public static final String COLUMN_PRODUCT_NAME = "Product Name";
+        public static final String COLUMN_PRODUCT_NAME = "productName";
         /**
          * Price.
          *
          * Type: INTEGER
          */
-        public static final String COLUMN_PRICE = "Price";
+        public static final String COLUMN_PRICE = "price";
         /**
          * Quantity.
          *
          * Type: INTEGER
          */
-        public static final String COLUMN_QUANTITY = "Quantity";
+        public static final String COLUMN_QUANTITY = "quantity";
         /**
          * supplier name.
          *
          * * Type: TEXT
          */
-        public static final String COLUMN_SUPPLIER_NAME = "Supplier Name";
+        public static final String COLUMN_SUPPLIER_NAME = "supplierName";
         /**
          * supplier phone number.
          *
          * * Type: TEXT
          */
-        public static final String COLUMN_SUPPLIER_PHONE_NUMBER = "Supplier Phone Number";
+        public static final String COLUMN_SUPPLIER_PHONE_NUMBER = "supplierPhoneNumber";
 
     }
 }
