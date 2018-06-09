@@ -24,15 +24,15 @@ import com.example.android.inventoryappproject1.data.InventoryDbHelper;
  * Displays list of items that were entered and stored in the app.
  */
 public class CatalogActivity extends AppCompatActivity {
-
-    /** Database helper that will provide us access to the database */
+    /**
+     * Database helper that will provide us access to the database
+     */
     private InventoryDbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog);
-
         // Setup FAB to open EditorActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -46,9 +46,9 @@ public class CatalogActivity extends AppCompatActivity {
         // To access our database, we instantiate our subclass of SQLiteOpenHelper
         // and pass the context, which is the current activity.
         mDbHelper = new InventoryDbHelper(this);
-
         displayDatabaseInfo();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -62,7 +62,6 @@ public class CatalogActivity extends AppCompatActivity {
     private void displayDatabaseInfo() {
         // Create and/or open a database to read from it
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
@@ -71,8 +70,7 @@ public class CatalogActivity extends AppCompatActivity {
                 InventoryEntry.COLUMN_PRICE,
                 InventoryEntry.COLUMN_QUANTITY,
                 InventoryEntry.COLUMN_SUPPLIER_NAME,
-                InventoryEntry.COLUMN_SUPPLIER_PHONE_NUMBER };
-
+                InventoryEntry.COLUMN_SUPPLIER_PHONE_NUMBER};
         // Perform a query on the inventory table
         Cursor cursor = db.query(
                 InventoryEntry.TABLE_NAME,   // The table to query
@@ -82,7 +80,6 @@ public class CatalogActivity extends AppCompatActivity {
                 null,                  // Don't group the rows
                 null,                  // Don't filter by row groups
                 null);                   // The sort order
-
         TextView displayView = (TextView) findViewById(R.id.text_view_inventory);
         try {
             // Create a header in the Text View that looks like this:
@@ -99,7 +96,6 @@ public class CatalogActivity extends AppCompatActivity {
                     InventoryEntry.COLUMN_QUANTITY + " - " +
                     InventoryEntry.COLUMN_SUPPLIER_NAME + " - " +
                     InventoryEntry.COLUMN_SUPPLIER_PHONE_NUMBER + "\n");
-
             // Figure out the index of each column
             int idColumnIndex = cursor.getColumnIndex(InventoryEntry._ID);
             int productNameColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_NAME);
@@ -107,7 +103,6 @@ public class CatalogActivity extends AppCompatActivity {
             int quantityColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_QUANTITY);
             int supplierNameColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_SUPPLIER_NAME);
             int supplierPhoneNumberColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_SUPPLIER_PHONE_NUMBER);
-
             // Iterate through all the returned rows in the cursor
             while (cursor.moveToNext()) {
                 // Use that index to extract the String or Int value of the word
@@ -133,23 +128,20 @@ public class CatalogActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * Helper method to insert hardcoded inventory data into the database. For debugging purposes only.
      */
     private void insertItem() {
         // Gets the database in write mode
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         // Create a ContentValues object where column names are the keys,
         // and item attributes are the values.
         ContentValues values = new ContentValues();
         values.put(InventoryEntry.COLUMN_PRODUCT_NAME, "Cell phone");
-        values.put(InventoryEntry.COLUMN_PRICE, 250 + "€");
+        values.put(InventoryEntry.COLUMN_PRICE, 250);
         values.put(InventoryEntry.COLUMN_QUANTITY, 12);
         values.put(InventoryEntry.COLUMN_SUPPLIER_NAME, "Micronis");
         values.put(InventoryEntry.COLUMN_SUPPLIER_PHONE_NUMBER, "00385976313181");
-
         // Insert a new row for item in the database, returning the ID of that new row.
         // The first argument for db.insert() is the inventory table name.
         // The second argument provides the name of a column in which the framework
@@ -158,7 +150,7 @@ public class CatalogActivity extends AppCompatActivity {
         // there are no values).
         // The third argument is the ContentValues object containing the info for item.
         long newRowId = db.insert(InventoryEntry.TABLE_NAME, null, values);
-        Log.v("CatalogActivity", "New row ID" + newRowId );
+        Log.v("CatalogActivity", "New row ID" + newRowId);
     }
 
     @Override
@@ -168,8 +160,6 @@ public class CatalogActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_catalog, menu);
         return true;
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
