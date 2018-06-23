@@ -25,10 +25,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CatalogActivity" />
         </activity>
-        <provider
-            android:name=".data.InventoryProvider"
-            android:authorities="com.example.android.inventoryappproject1"
-            android:exported="false" />
     </application>
 
 </manifest>
