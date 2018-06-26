@@ -34,7 +34,7 @@
                 android:fontFamily="sans-serif"
                 android:text="Price:"
                 android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="#AEB6BD"
+                android:textColor="#2B3D4D"
                 tools:text="Product Price" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="#AEB6BD"
+                android:textColor="#2B3D4D"
                 tools:text="Product Quantity" />
         </LinearLayout>
     </LinearLayout>

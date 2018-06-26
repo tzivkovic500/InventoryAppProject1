@@ -119,6 +119,7 @@ public class EditorActivity extends AppCompatActivity implements
         supplierPhoneNumberEditText.setOnTouchListener(mTouchListener);
         increaseButton.setOnTouchListener(mTouchListener);
         decreaseButton.setOnTouchListener(mTouchListener);
+
         decreaseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String quantity = quantityEditText.getText().toString();
@@ -349,7 +350,7 @@ public class EditorActivity extends AppCompatActivity implements
         // Proceed with moving to the first row of the cursor and reading data from it
         // (This should be the only row in the cursor)
         if (cursor.moveToFirst()) {
-            // Find the columns of pet attributes that we're interested in
+            // Find the columns of products attributes that we're interested in
             int productNameColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_NAME);
             int priceColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRICE);
             int quantityColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_QUANTITY);

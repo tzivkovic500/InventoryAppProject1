@@ -62,8 +62,8 @@ public class InventoryCursorAdapter extends CursorAdapter {
         final String quantityProduct = getCursor().getString(quantityColumnIndex);
 
         productNameTextView.setText(nameProduct);
-        productPriceTextView.setText(priceProduct);
-        productQuantityTextView.setText(quantityProduct);
+        productPriceTextView.setText("Price" + " : " + priceProduct + "  " + "€");
+        productQuantityTextView.setText("Quantity" + " : " + quantityProduct);
 
         final int idColumnIndex = getCursor().getInt(getCursor().getColumnIndex(InventoryEntry._ID));
         final int actualQuantityIndex = getCursor().getInt(getCursor().getColumnIndex(InventoryEntry.COLUMN_QUANTITY));
