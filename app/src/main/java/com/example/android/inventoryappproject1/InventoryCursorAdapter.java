@@ -6,7 +6,6 @@ package com.example.android.inventoryappproject1;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,36 +44,23 @@ public class InventoryCursorAdapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.list_item, parent,false);
     }
 
-    /**
-     * This method binds the Inventory data (in the current row pointed to by cursor) to the given
-     * list item layout. For example, the name for the current product can be set on the name TextView
-     * in the list item layout.
-     *
-     * @param view    Existing view, returned earlier by newView() method
-     * @param context app context
-     * @param cursor  The cursor from which to get the data. The cursor is already moved to the
-     *                correct row.
-     */
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        // Find individual views that we want to modify in the list item layout
-        TextView nameTextView = (TextView) view.findViewById(R.id.name);
-        TextView summaryTextView = (TextView) view.findViewById(R.id.summary);
 
-        // Find the columns of product attributes that we're interested in
+        TextView nameTextView = (TextView) view.findViewById(R.id.name);
+        TextView priceTextView = (TextView) view.findViewById(R.id.price);
+        TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
+
         int productNameColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_NAME);
         int priceColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRICE);
         int quantityColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_QUANTITY);
 
-        // Read the product attributes from the Cursor for the current product
-        String productName = cursor.getString(productNameColumnIndex);
+        String name = cursor.getString(productNameColumnIndex);
         String price = cursor.getString(priceColumnIndex);
         String quantity = cursor.getString(quantityColumnIndex);
 
-
-        // Update the TextViews with the attributes for the current product
-        nameTextView.setText(productName);
-        summaryTextView.setText(price);
-        summaryTextView.setText(quantity);
+        nameTextView.setText(name);
+        priceTextView.setText("Price" + " : " + price + "  " + "€");
+        quantityTextView.setText("Quantity" + " : " + quantity);
     }
 }

@@ -65,31 +65,51 @@
 
         </LinearLayout>
     </LinearLayout>
-    <!-- quantity-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
-        <!-- Label -->
         <TextView
             style="@style/InventoryStyle"
-            android:text="@string/quantity" />
+            android:text="@string/quantity"
+            />
 
-        <!-- Input fields -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical"
-            android:paddingLeft="4dp">
+            android:orientation="horizontal"
+            android:paddingLeft="60dp">
 
-            <!--Product name field -->
-            <EditText
-                android:id="@+id/quantity"
-                style="@style/EditorFieldStyle"
-                android:hint="@string/quantity1"
-                android:inputType="textCapWords" />
+            <Button
+                android:id="@+id/decrease_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="-"
+                android:onClick="decreament"
+                android:textColor="@android:color/white"
+                android:background="@color/colorAccent"/>
+
+            <TextView
+                android:id="@+id/quantity_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:text="0"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                />
+
+            <Button
+                android:id="@+id/increase_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="+"
+                android:onClick="increament"
+                android:textColor="@android:color/white"
+                android:background="@color/colorAccent"/>
 
         </LinearLayout>
     </LinearLayout>

@@ -76,16 +76,16 @@ public class InventoryProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
         switch (match) {
             case PRODUCTS:
-                // This will perform a query on the product table where the _id equals 5 to return a
+                // This will perform a query on the product table where the _id equals 3 to return a
                 // Cursor containing that row of the table.
                 cursor = database.query(InventoryEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
             case PRODUCT_ID:
                 // For the PRODUCT_ID code, extract out the ID from the URI.
-                // For an example URI such as "content://com.example.android.inventoryappproject1/inventoryappproject1/5",
+                // For an example URI such as "content://com.example.android.inventoryappproject1/inventoryappproject1/3",
                 // the selection will be "_id=?" and the selection argument will be a
-                // String array containing the actual ID of 5 in this case.
+                // String array containing the actual ID of 3 in this case.
                 //
                 // For every "?" in the selection, we need to have an element in the selection
                 // arguments that will fill in the "?". Since we have 1 question mark in the
@@ -93,7 +93,7 @@ public class InventoryProvider extends ContentProvider {
                 selection = InventoryEntry._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
 
-                // This will perform a query on the products table where the _id equals 5 to return a
+                // This will perform a query on the products table where the _id equals 3 to return a
                 // Cursor containing that row of the table.
                 cursor = database.query(InventoryEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
@@ -217,7 +217,7 @@ public class InventoryProvider extends ContentProvider {
         }
 
         // If the {@link InventoryEntry#COLUMN_QUANTITY} key is present,
-        // check that the quantitiy value is valid.
+        // check that the quantity value is valid.
         if (values.containsKey(InventoryEntry.COLUMN_QUANTITY)) {
             // Check that the quantity is greater than  0
             Integer quantity = values.getAsInteger(InventoryEntry.COLUMN_QUANTITY);

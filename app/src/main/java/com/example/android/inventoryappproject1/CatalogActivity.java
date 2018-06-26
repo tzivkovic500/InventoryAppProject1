@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.android.inventoryappproject1.data.InventoryContract.InventoryEntry;
 
@@ -85,6 +86,19 @@ public class CatalogActivity extends AppCompatActivity implements
         // Kick off the loader
         getLoaderManager().initLoader(INVENTORY_LOADER, null, this);
     }
+    public void itemSaleCount(int productID, int productQuantity) {
+        productQuantity = productQuantity - 1;
+        if (productQuantity >= 0) {
+            ContentValues values = new ContentValues();
+            values.put(InventoryEntry.COLUMN_QUANTITY, productQuantity);
+            Uri updateUri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, productID);
+            int rowsAffected = getContentResolver().update(updateUri, values, null, null);
+            Toast.makeText(this, "Quantity has changed", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(this, "item is finished", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     /**
      * Helper method to insert hardcoded inventory data into the database. For debugging purposes only.
@@ -107,7 +121,7 @@ public class CatalogActivity extends AppCompatActivity implements
      */
     private void deleteAllProducts() {
         int rowsDeleted = getContentResolver().delete(InventoryEntry.CONTENT_URI, null, null);
-        Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
+        Log.v("CatalogActivity", rowsDeleted + " rows deleted from inventory database");
     }
 
     @Override
