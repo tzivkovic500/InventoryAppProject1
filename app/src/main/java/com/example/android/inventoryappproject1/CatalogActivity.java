@@ -5,6 +5,7 @@ package com.example.android.inventoryappproject1;
  */
 
 
+import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -25,7 +26,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.android.inventoryappproject1.data.InventoryContract.InventoryEntry;
-
 
 /**
  * Displays list of items that were entered and stored in the app.
@@ -86,43 +86,6 @@ public class CatalogActivity extends AppCompatActivity implements
         // Kick off the loader
         getLoaderManager().initLoader(INVENTORY_LOADER, null, this);
     }
-    public void itemSaleCount(int productID, int productQuantity) {
-        productQuantity = productQuantity - 1;
-        if (productQuantity >= 0) {
-            ContentValues values = new ContentValues();
-            values.put(InventoryEntry.COLUMN_QUANTITY, productQuantity);
-            Uri updateUri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, productID);
-            int rowsAffected = getContentResolver().update(updateUri, values, null, null);
-            Toast.makeText(this, "Quantity has changed", Toast.LENGTH_SHORT).show();
-
-        } else {
-            Toast.makeText(this, "item is finished", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Helper method to insert hardcoded inventory data into the database. For debugging purposes only.
-     */
-    private void insertItem() {
-        ContentValues values = new ContentValues();
-        values.put(InventoryEntry.COLUMN_PRODUCT_NAME, "Cell phone");
-        values.put(InventoryEntry.COLUMN_PRICE, 250);
-        values.put(InventoryEntry.COLUMN_QUANTITY, 12);
-        values.put(InventoryEntry.COLUMN_SUPPLIER_NAME, "Micronis");
-        values.put(InventoryEntry.COLUMN_SUPPLIER_PHONE_NUMBER, "00385976313181");
-        // Insert a new row for Cell phone into the provider using the ContentResolver.
-        // Use the {@link InventoryEntry#CONTENT_URI} to indicate that we want to insert
-        // into the inventory database table.
-        // Receive the new content URI that will allow us to access Cell phone's data in the future.
-        Uri newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
-        }
-    /**
-     * Helper method to delete all products in the database.
-     */
-    private void deleteAllProducts() {
-        int rowsDeleted = getContentResolver().delete(InventoryEntry.CONTENT_URI, null, null);
-        Log.v("CatalogActivity", rowsDeleted + " rows deleted from inventory database");
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,9 +99,10 @@ public class CatalogActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
-            // Respond to a click on the "Insert dummy data" menu option
-            case R.id.action_insert_dummy_data:
-                insertItem();
+            /// Respond to a click on the "Add new product" menu option
+            case R.id.action_insert_entry:
+                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
+                startActivity(intent);
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
@@ -178,6 +142,13 @@ public class CatalogActivity extends AppCompatActivity implements
     public void onLoaderReset(Loader<Cursor> loader) {
         // Callback called when the data needs to be deleted
         mCursorAdapter.swapCursor(null);
+    }
+/**
+ * Helper method to delete all entries in the database.
+ */
+    private void deleteAllProducts() {
+        int entryDeleted = getContentResolver().delete(InventoryEntry.CONTENT_URI, null, null);
+        Log.v("CatalogActivity", entryDeleted + " entry deleted from product database");
     }
 }
 

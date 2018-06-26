@@ -22,6 +22,10 @@ public class InventoryProvider extends ContentProvider {
 
     /** Tag for the log messages */
     public static final String LOG_TAG = InventoryProvider.class.getSimpleName();
+    /**
+     * Initialize the provider and the database helper object.
+     */
+    private InventoryDbHelper mDbHelper;
 
     /** URI matcher code for the content URI for the inventory table */
     private static final int PRODUCTS = 100;
@@ -47,11 +51,7 @@ public class InventoryProvider extends ContentProvider {
         sUriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY,InventoryContract.PATH_PRODUCTS + "/#", PRODUCT_ID);
     }
 
-    /**
-     * Initialize the provider and the database helper object.
-     */
-    /** Database helper object */
-    private InventoryDbHelper mDbHelper;
+
 
     @Override
     public boolean onCreate() {

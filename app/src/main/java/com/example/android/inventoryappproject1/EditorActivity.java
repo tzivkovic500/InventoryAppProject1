@@ -20,9 +20,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.example.android.inventoryappproject1.data.InventoryContract.InventoryEntry;
 
@@ -52,7 +54,7 @@ public class EditorActivity extends AppCompatActivity implements
     /**
      * EditText field to enter the quantity
      */
-    private TextView quantityTextView;
+    private EditText quantityEditText;
     /**
      * EditText field to enter the supplier name
      */
@@ -65,7 +67,7 @@ public class EditorActivity extends AppCompatActivity implements
      * Boolean flag that keeps track of whether the product has been edited (true) or not (false)
      */
     private boolean mInventoryHasChanged = false;
-    private int quantity;
+
 
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
@@ -107,36 +109,70 @@ public class EditorActivity extends AppCompatActivity implements
             getLoaderManager().initLoader(EXISTING_INVENTORY_LOADER, null, this);
         }
         // Find all relevant views that we will need to read user input from
-        productNameEditText = (EditText) findViewById(R.id.product_name);
-        priceEditText = (EditText) findViewById(R.id.price);
-        quantityTextView = (TextView) findViewById(R.id.quantity_text_view);
-        supplierNameEditText = (EditText) findViewById(R.id.supplier_name);
-        supplierPhoneNumberEditText = (EditText) findViewById(R.id.supplier_phone);
+        productNameEditText = (EditText) findViewById(R.id.edit_name);
+        priceEditText = (EditText) findViewById(R.id.edit_price);
+        quantityEditText = (EditText) findViewById(R.id.edit_quantity);
+        supplierNameEditText = (EditText) findViewById(R.id.edit_supplier_name);
+        supplierPhoneNumberEditText = (EditText) findViewById(R.id.edit_supplier_phone);
+        Button increaseButton = (Button) findViewById(R.id.increase_button);
+        Button decreaseButton = (Button)findViewById(R.id.decrease_button);
+        Button orderButton = (Button)findViewById(R.id.order_button);
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
         // or not, if the user tries to leave the editor without saving.
        productNameEditText.setOnTouchListener(mTouchListener);
         priceEditText.setOnTouchListener(mTouchListener);
-        quantityTextView.setOnTouchListener(mTouchListener);
+        quantityEditText.setOnTouchListener(mTouchListener);
         supplierNameEditText.setOnTouchListener(mTouchListener);
         supplierPhoneNumberEditText.setOnTouchListener(mTouchListener);
+        increaseButton.setOnTouchListener(mTouchListener);
+        decreaseButton.setOnTouchListener(mTouchListener);
 
-        View productDecreaseButton = findViewById (R.id.decrease_button);
-        productDecreaseButton.setOnClickListener (new View.OnClickListener () {
-            @Override
+        decreaseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                decreament (quantityTextView);
+                String quantity = quantityEditText.getText().toString();
+                if (TextUtils.isEmpty(quantity)) {
+                    quantityEditText.setText("0");
+                } else {
+                    int new_quantity = Integer.parseInt(quantityEditText.getText().toString().trim());
+                    if (new_quantity > 0) {
+                        new_quantity--;
+                        quantityEditText.setText(String.valueOf(new_quantity));
+                    } else {
+                        Toast.makeText(EditorActivity.this, "The quantity cannot be negative!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 
-        View productIncreaseButton = findViewById (R.id.increase_button);
-        productIncreaseButton.setOnClickListener (new View.OnClickListener () {
+        increaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                increament (quantityTextView);
+                String quantity = quantityEditText.getText().toString();
+                if (TextUtils.isEmpty(quantity)) {
+                    quantityEditText.setText("1");
+                } else {
+                    int not_null_quantity = Integer.parseInt(quantityEditText.getText().toString().trim());
+                    not_null_quantity++;
+                    quantityEditText.setText(String.valueOf(not_null_quantity));
+                }
             }
         });
-}
+
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phone = supplierPhoneNumberEditText.getText().toString().trim();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phone));
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
+
+    }
 /**
      * Get user input from editor and save new product into database.
      */
@@ -146,7 +182,7 @@ public class EditorActivity extends AppCompatActivity implements
         String productNameString = productNameEditText.getText().toString().trim();
         String priceString = priceEditText.getText().toString().trim();
         int price = Integer.parseInt(priceString);
-        String quantityString = quantityTextView.getText().toString().trim();
+        String quantityString = quantityEditText.getText().toString().trim();
         int quantity = Integer.parseInt(quantityString);
         String supplierNameString = supplierNameEditText.getText().toString().trim();
         String supplierPhoneNumberString = supplierPhoneNumberEditText.getText().toString().trim();
@@ -346,31 +382,10 @@ public class EditorActivity extends AppCompatActivity implements
             // Update the views on the screen with the values from the database
             productNameEditText.setText(cproductName);
             priceEditText.setText(Integer.toString(cprice));
-            quantityTextView.setText(Integer.toString(cquantity));
+            quantityEditText.setText(Integer.toString(cquantity));
             supplierNameEditText.setText(csupplierName);
             supplierPhoneNumberEditText.setText(csupplierPhoneNumber);
-
-
         }
-    }
-    public void increament(View view) {
-        quantity = Integer.parseInt(quantityTextView.getText().toString());
-        quantity = quantity + 1;
-        display(quantity);
-    }
-
-    public void decreament(View view) {
-
-        quantity = Integer.parseInt(quantityTextView.getText().toString());
-        if (quantity > 0) {
-            quantity = quantity - 1;
-            display(quantity);
-        } else {
-            return;
-        }
-    }
-    private void display(int number) {
-        quantityTextView.setText("" + number);
     }
 
         @Override
@@ -378,7 +393,7 @@ public class EditorActivity extends AppCompatActivity implements
         // If the loader is invalidated, clear out all the data from the input fields.
         productNameEditText.setText("");
         priceEditText.setText("");
-        quantityTextView.setText("");
+        quantityEditText.setText("");
         supplierNameEditText.setText("");
         supplierPhoneNumberEditText.setText("");
         }
