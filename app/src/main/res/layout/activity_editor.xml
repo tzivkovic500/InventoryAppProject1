@@ -56,7 +56,7 @@
             android:orientation="vertical"
             android:paddingLeft="4dp">
 
-            <!--Product name field -->
+            <!--edit price field -->
             <EditText
                 android:id="@+id/edit_price"
                 style="@style/EditorFieldStyle"
@@ -65,16 +65,15 @@
 
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <TextView
             style="@style/InventoryStyle"
-            android:text="@string/quantity"
-            />
+            android:text="@string/quantity" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,9 +85,9 @@
                 android:id="@+id/decrease_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:background="@color/colorAccent"
                 android:text="-"
-                android:textColor="@android:color/white"
-                android:background="@color/colorAccent"/>
+                android:textColor="@android:color/white" />
 
             <EditText
                 android:id="@+id/edit_quantity"
@@ -99,17 +98,15 @@
                 android:hint="0"
                 android:inputType="number"
                 android:textColor="@android:color/black"
-                android:textSize="16sp"
-                />
-
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/increase_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:background="@color/colorAccent"
                 android:text="+"
-                android:textColor="@android:color/white"
-                android:background="@color/colorAccent"/>
+                android:textColor="@android:color/white" />
 
         </LinearLayout>
     </LinearLayout>
@@ -132,7 +129,7 @@
             android:orientation="vertical"
             android:paddingLeft="4dp">
 
-            <!--Product name field -->
+            <!--edit supplier name field -->
             <EditText
                 android:id="@+id/edit_supplier_name"
                 style="@style/EditorFieldStyle"
@@ -160,7 +157,7 @@
             android:orientation="vertical"
             android:paddingLeft="4dp">
 
-            <!--Product name field -->
+            <!--edit phone number field -->
             <EditText
                 android:id="@+id/edit_supplier_phone"
                 style="@style/EditorFieldStyle"

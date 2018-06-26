@@ -3,6 +3,7 @@ package com.example.android.inventoryappproject1;
 /**
  * Created by Tea on 7.6.2018..
  */
+
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
@@ -22,7 +23,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -33,12 +33,10 @@ import com.example.android.inventoryappproject1.data.InventoryContract.Inventory
  */
 public class EditorActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
-
     /**
      * Identifier for the inventory data loader
      */
     private static final int EXISTING_INVENTORY_LOADER = 0;
-
     /**
      * Content URI for the existing product (null if it's a new product)
      */
@@ -67,8 +65,6 @@ public class EditorActivity extends AppCompatActivity implements
      * Boolean flag that keeps track of whether the product has been edited (true) or not (false)
      */
     private boolean mInventoryHasChanged = false;
-
-
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
      * the view, and we change the mInventoryHasChanged boolean to true.
@@ -85,25 +81,21 @@ public class EditorActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
-
         // Examine the intent that was used to launch this activity,
         // in order to figure out if we're creating a new product or editing an existing one.
         Intent intent = getIntent();
         mCurrentInventoryUri = intent.getData();
-
         // If the intent DOES NOT contain a product content URI, then we know that we are
         // creating a new product.
         if (mCurrentInventoryUri == null) {
             // This is a new product, so change the app bar to say "Add a Product"
             setTitle(getString(R.string.editor_activity_title_new_product));
-
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
             // (It doesn't make sense to delete a product that hasn't been created yet.)
             invalidateOptionsMenu();
         } else {
             // Otherwise this is an existing product, so change app bar to say "Edit Product"
             setTitle(getString(R.string.editor_activity_title_edit_product));
-
             // Initialize a loader to read the product data from the database
             // and display the current values in the editor
             getLoaderManager().initLoader(EXISTING_INVENTORY_LOADER, null, this);
@@ -115,19 +107,18 @@ public class EditorActivity extends AppCompatActivity implements
         supplierNameEditText = (EditText) findViewById(R.id.edit_supplier_name);
         supplierPhoneNumberEditText = (EditText) findViewById(R.id.edit_supplier_phone);
         Button increaseButton = (Button) findViewById(R.id.increase_button);
-        Button decreaseButton = (Button)findViewById(R.id.decrease_button);
-        Button orderButton = (Button)findViewById(R.id.order_button);
+        Button decreaseButton = (Button) findViewById(R.id.decrease_button);
+        Button orderButton = (Button) findViewById(R.id.order_button);
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
         // or not, if the user tries to leave the editor without saving.
-       productNameEditText.setOnTouchListener(mTouchListener);
+        productNameEditText.setOnTouchListener(mTouchListener);
         priceEditText.setOnTouchListener(mTouchListener);
         quantityEditText.setOnTouchListener(mTouchListener);
         supplierNameEditText.setOnTouchListener(mTouchListener);
         supplierPhoneNumberEditText.setOnTouchListener(mTouchListener);
         increaseButton.setOnTouchListener(mTouchListener);
         decreaseButton.setOnTouchListener(mTouchListener);
-
         decreaseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String quantity = quantityEditText.getText().toString();
@@ -145,7 +136,6 @@ public class EditorActivity extends AppCompatActivity implements
                 }
             }
         });
-
         increaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,7 +149,6 @@ public class EditorActivity extends AppCompatActivity implements
                 }
             }
         });
-
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +162,7 @@ public class EditorActivity extends AppCompatActivity implements
         });
 
     }
-/**
+    /**
      * Get user input from editor and save new product into database.
      */
     private void saveProduct() {
@@ -248,7 +237,6 @@ public class EditorActivity extends AppCompatActivity implements
         getMenuInflater().inflate(R.menu.menu_editor, menu);
         return true;
     }
-
     /**
      * This method is called after invalidateOptionsMenu(), so that the
      * menu can be updated (some menu items can be hidden or made visible).
@@ -263,7 +251,6 @@ public class EditorActivity extends AppCompatActivity implements
         }
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
@@ -288,7 +275,6 @@ public class EditorActivity extends AppCompatActivity implements
                     NavUtils.navigateUpFromSameTask(EditorActivity.this);
                     return true;
                 }
-
                 // Otherwise if there are unsaved changes, setup a dialog to warn the user.
                 // Create a click listener to handle the user confirming that
                 // changes should be discarded.
@@ -307,7 +293,6 @@ public class EditorActivity extends AppCompatActivity implements
         }
         return super.onOptionsItemSelected(item);
     }
-
     /**
      * This method is called when the back button is pressed.
      */
@@ -345,7 +330,6 @@ public class EditorActivity extends AppCompatActivity implements
                 InventoryEntry.COLUMN_QUANTITY,
                 InventoryEntry.COLUMN_SUPPLIER_NAME,
                 InventoryEntry.COLUMN_SUPPLIER_PHONE_NUMBER};
-
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
                 mCurrentInventoryUri,         // Query the content URI for the current pet
@@ -371,14 +355,12 @@ public class EditorActivity extends AppCompatActivity implements
             int quantityColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_QUANTITY);
             int supplierNameColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_SUPPLIER_NAME);
             int supplierPhoneNumberColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_SUPPLIER_PHONE_NUMBER);
-
             // Extract out the value from the Cursor for the given column index
             String cproductName = cursor.getString(productNameColumnIndex);
             int cprice = cursor.getInt(priceColumnIndex);
             int cquantity = cursor.getInt(quantityColumnIndex);
             String csupplierName = cursor.getString(supplierNameColumnIndex);
             String csupplierPhoneNumber = cursor.getString(supplierPhoneNumberColumnIndex);
-
             // Update the views on the screen with the values from the database
             productNameEditText.setText(cproductName);
             priceEditText.setText(Integer.toString(cprice));
@@ -387,101 +369,97 @@ public class EditorActivity extends AppCompatActivity implements
             supplierPhoneNumberEditText.setText(csupplierPhoneNumber);
         }
     }
-
-        @Override
-        public void onLoaderReset(Loader<Cursor> loader){
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
         // If the loader is invalidated, clear out all the data from the input fields.
         productNameEditText.setText("");
         priceEditText.setText("");
         quantityEditText.setText("");
         supplierNameEditText.setText("");
         supplierPhoneNumberEditText.setText("");
-        }
-
-      /**
-     * Show a dialog that warns the user there are unsaved changes that will be lost
-    * if they continue leaving the editor.
-     *
-    * @param discardButtonClickListener is the click listener for what to do when
-    * the user confirms they want to discard their changes
- */
-       private void showUnsavedChangesDialog(
-        DialogInterface.OnClickListener discardButtonClickListener){
-        // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the postivie and negative buttons on the dialog.
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        builder.setMessage(R.string.unsaved_changes_dialog_msg);
-        builder.setPositiveButton(R.string.discard,discardButtonClickListener);
-        builder.setNegativeButton(R.string.keep_editing,new DialogInterface.OnClickListener(){
-       public void onClick(DialogInterface dialog,int id){
-        // User clicked the "Keep editing" button, so dismiss the dialog
-        // and continue editing the pet.
-        if(dialog!=null){
-        dialog.dismiss();
-        }
-        }
-        });
-
-        // Create and show the AlertDialog
-        AlertDialog alertDialog=builder.create();
-        alertDialog.show();
-        }
-
+    }
     /**
-    * Prompt the user to confirm that they want to delete this product.
-    */
-     private void showDeleteConfirmationDialog(){
+     * Show a dialog that warns the user there are unsaved changes that will be lost
+     * if they continue leaving the editor.
+     *
+     * @param discardButtonClickListener is the click listener for what to do when
+     *                                   the user confirms they want to discard their changes
+     */
+    private void showUnsavedChangesDialog(
+            DialogInterface.OnClickListener discardButtonClickListener) {
         // Create an AlertDialog.Builder and set the message, and click listeners
         // for the postivie and negative buttons on the dialog.
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        builder.setMessage(R.string.delete_dialog_msg);
-        builder.setPositiveButton(R.string.delete,new DialogInterface.OnClickListener(){
-      public void onClick(DialogInterface dialog,int id){
-        // User clicked the "Delete" button, so delete the product.
-        deleteProduct();
-        }
-        });
-        builder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
-      public void onClick(DialogInterface dialog,int id){
-        // User clicked the "Cancel" button, so dismiss the dialog
-        // and continue editing the product.
-        if(dialog!=null){
-        dialog.dismiss();
-        }
-        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.unsaved_changes_dialog_msg);
+        builder.setPositiveButton(R.string.discard, discardButtonClickListener);
+        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Keep editing" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
         });
 
         // Create and show the AlertDialog
-        AlertDialog alertDialog=builder.create();
+        AlertDialog alertDialog = builder.create();
         alertDialog.show();
-        }
-     /**
-     *  Perform the deletion of the product in the database.
+    }
+    /**
+     * Prompt the user to confirm that they want to delete this product.
      */
-      private void deleteProduct(){
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the postivie and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the product.
+                deleteProduct();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the product.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    /**
+     * Perform the deletion of the product in the database.
+     */
+    private void deleteProduct() {
         // Only perform the delete if this is an existing product.
-        if(mCurrentInventoryUri!=null){
-        // Call the ContentResolver to delete the product at the given content URI.
-        // Pass in null for the selection and selection args because the mCurrentInventoryUri
-        // content URI already identifies the product that we want.
-        int rowsDeleted=getContentResolver().delete(mCurrentInventoryUri,null,null);
+        if (mCurrentInventoryUri != null) {
+            // Call the ContentResolver to delete the product at the given content URI.
+            // Pass in null for the selection and selection args because the mCurrentInventoryUri
+            // content URI already identifies the product that we want.
+            int rowsDeleted = getContentResolver().delete(mCurrentInventoryUri, null, null);
 
-        // Show a toast message depending on whether or not the delete was successful.
-        if(rowsDeleted==0){
-        // If no rows were deleted, then there was an error with the delete.
-        Toast.makeText(this,getString(R.string.editor_delete_product_failed),
-        Toast.LENGTH_SHORT).show();
-        }else{
-        // Otherwise, the delete was successful and we can display a toast.
-        Toast.makeText(this,getString(R.string.editor_delete_product_successful),
-        Toast.LENGTH_SHORT).show();
+            // Show a toast message depending on whether or not the delete was successful.
+            if (rowsDeleted == 0) {
+                // If no rows were deleted, then there was an error with the delete.
+                Toast.makeText(this, getString(R.string.editor_delete_product_failed),
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the delete was successful and we can display a toast.
+                Toast.makeText(this, getString(R.string.editor_delete_product_successful),
+                        Toast.LENGTH_SHORT).show();
+            }
         }
-        }
-
         // Close the activity
         finish();
-        }
-        }
+    }
+}
 
 
 

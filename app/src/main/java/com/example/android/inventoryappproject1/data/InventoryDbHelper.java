@@ -23,7 +23,6 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
      * Database version. If you change the database schema, you must increment the database version.
      */
     private static final int DATABASE_VERSION = 1;
-
     /**
      * Constructs a new instance of {@link InventoryDbHelper}.
      *
@@ -32,7 +31,6 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
     public InventoryDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
     /**
      * This is called when the database is created for the first time.
      */
@@ -49,13 +47,12 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
         // Execute the SQL statement
         db.execSQL(SQL_CREATE_INVENTORY_TABLE);
     }
-
     /**
      * This is called when the database needs to be upgraded.
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-     // The database is still at version 1, so there's nothing to do be done here.
+        // The database is still at version 1, so there's nothing to do be done here.
     }
 }
 

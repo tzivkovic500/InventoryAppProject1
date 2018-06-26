@@ -11,7 +11,9 @@ import android.provider.BaseColumns;
 public final class InventoryContract {
     // To prevent someone from accidentally instantiating the contract class,
 // give it an empty constructor.
-    private InventoryContract() {}
+    private InventoryContract() {
+    }
+
     /**
      * The "Content authority" is a name for the entire content provider, similar to the
      * relationship between a domain name and its website.  A convenient string to use for the
@@ -40,10 +42,14 @@ public final class InventoryContract {
      */
     public static final class InventoryEntry implements BaseColumns {
 
-        /** The content URI to access the inventory data in the provider */
+        /**
+         * The content URI to access the inventory data in the provider
+         */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_PRODUCTS);
 
-        /** Name of database table for products */
+        /**
+         * Name of database table for products
+         */
         public final static String TABLE_NAME = "inventory";
 
         /**
@@ -60,37 +66,38 @@ public final class InventoryContract {
 
         /**
          * Unique ID number for the product (only for use in the database table).
-         *
+         * <p>
          * Type: INTEGER
          */
         public static final String _ID = BaseColumns._ID;
         /**
          * Name of the product.
-         *
+         * <p>
          * Type: TEXT
          */
-        public static final String COLUMN_PRODUCT_NAME = "productName";;
+        public static final String COLUMN_PRODUCT_NAME = "productName";
+        ;
         /**
          * Price.
-         *
+         * <p>
          * Type: INTEGER
          */
         public static final String COLUMN_PRICE = "price";
         /**
          * Quantity.
-         *
+         * <p>
          * Type: INTEGER
          */
         public static final String COLUMN_QUANTITY = "quantity";
         /**
          * supplier name.
-         *
+         * <p>
          * * Type: TEXT
          */
         public static final String COLUMN_SUPPLIER_NAME = "supplierName";
         /**
          * supplier phone number.
-         *
+         * <p>
          * * Type: TEXT
          */
         public static final String COLUMN_SUPPLIER_PHONE_NUMBER = "supplierPhoneNumber";

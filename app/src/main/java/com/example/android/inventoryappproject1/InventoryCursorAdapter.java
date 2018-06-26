@@ -25,7 +25,6 @@ import com.example.android.inventoryappproject1.data.InventoryContract.Inventory
  * how to create list items for each row of Inventory data in the {@link Cursor}.
  */
 public class InventoryCursorAdapter extends CursorAdapter {
-
     /**
      * Constructs a new {@link InventoryCursorAdapter}.
      *
@@ -34,7 +33,6 @@ public class InventoryCursorAdapter extends CursorAdapter {
      */
     public InventoryCursorAdapter(Context context, Cursor c) {  super(context, c, 0 /* flags */);
     }
-
     /**
      * Makes a new blank list item view. No data is set (or bound) to the views yet.
      *
@@ -48,15 +46,12 @@ public class InventoryCursorAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return LayoutInflater.from(context).inflate(R.layout.list_item, parent,false);
     }
-
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
-
         TextView productNameTextView = (TextView) view.findViewById(R.id.name);
         TextView productPriceTextView = (TextView) view.findViewById(R.id.price);
         TextView productQuantityTextView = (TextView) view.findViewById(R.id.quantity);
         Button productSale = (Button)view.findViewById(R.id.sell_button);
-
 
         int productNameColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_NAME);
         int priceColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRICE);
@@ -77,7 +72,6 @@ public class InventoryCursorAdapter extends CursorAdapter {
         productSale.setOnClickListener(new View.OnClickListener() {
             public void onClick (View view){
                 if (actualQuantity > 0){
-
                     int newActualQuantity = actualQuantity - 1;
                     Uri quantityUri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, idColumnIndex);
 
