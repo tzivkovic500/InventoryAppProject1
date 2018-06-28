@@ -57,5 +57,7 @@
     <string name="remaining_quantity">is: </string>
     <string name="sale_error">Sale can&amp;t be made because </string>
     <string name="no_stock">out of stock!</string>
+    <string name="empty_field_error">This field cannot be empty! Please enter a value!</string>
+    <string name="enter_value_into_field">The field must have an entry!</string>
     </resources>
 

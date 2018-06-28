@@ -61,7 +61,7 @@
                 android:id="@+id/edit_price"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/price1"
-                android:inputType="textCapWords" />
+                android:inputType="number" />
 
         </LinearLayout>
     </LinearLayout>
@@ -162,7 +162,7 @@
                 android:id="@+id/edit_supplier_phone"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/supplier_phone1"
-                android:inputType="textCapWords" />
+                android:inputType="number" />
 
         </LinearLayout>
     </LinearLayout>

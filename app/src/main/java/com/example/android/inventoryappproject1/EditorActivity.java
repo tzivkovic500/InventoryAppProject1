@@ -176,11 +176,15 @@ public class EditorActivity extends AppCompatActivity implements
         int quantity = Integer.parseInt(quantityString);
         String supplierNameString = supplierNameEditText.getText().toString().trim();
         String supplierPhoneNumberString = supplierPhoneNumberEditText.getText().toString().trim();
+
+
+
+
         // Check if this is supposed to be a new product
         // and check if all the fields in the editor are blank
         if (mCurrentInventoryUri == null &&
-                TextUtils.isEmpty(productNameString) && TextUtils.isEmpty(priceString) &&
-                TextUtils.isEmpty(quantityString) && TextUtils.isEmpty(supplierNameString) &&
+                TextUtils.isEmpty(productNameString) ||  TextUtils.isEmpty(priceString) ||
+                TextUtils.isEmpty(quantityString) ||  TextUtils.isEmpty(supplierNameString) ||
                 TextUtils.isEmpty(supplierPhoneNumberString)) {
             Toast.makeText(this, "All fields are requaired", Toast.LENGTH_SHORT).show();
             // Since no fields were modified, we can return early without creating a new product.
@@ -195,6 +199,9 @@ public class EditorActivity extends AppCompatActivity implements
         values.put(InventoryEntry.COLUMN_QUANTITY, quantity);
         values.put(InventoryEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
         values.put(InventoryEntry.COLUMN_SUPPLIER_PHONE_NUMBER, supplierPhoneNumberString);
+
+
+
         // Determine if this is a new or existing product by checking if mCurrentInventoryUri is null or not
         if (mCurrentInventoryUri == null) {
             // This is a NEW product, so insert a new product into the provider,
