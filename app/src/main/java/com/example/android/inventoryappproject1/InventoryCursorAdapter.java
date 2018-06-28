@@ -47,47 +47,56 @@ public class InventoryCursorAdapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.list_item, parent,false);
     }
     @Override
-    public void bindView(View view, final Context context, Cursor cursor) {
+       public void bindView(View view, final Context context, Cursor cursor) {
         TextView productNameTextView = (TextView) view.findViewById(R.id.name);
         TextView productPriceTextView = (TextView) view.findViewById(R.id.price);
-        TextView productQuantityTextView = (TextView) view.findViewById(R.id.quantity);
+        final TextView productQuantityTextView = (TextView) view.findViewById(R.id.quantity);
         Button productSale = (Button)view.findViewById(R.id.sell_button);
+        final int product_Id = cursor.getInt(cursor.getColumnIndexOrThrow(InventoryEntry._ID));
 
         int productNameColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRODUCT_NAME);
         int priceColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_PRICE);
         int quantityColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_QUANTITY);
 
-        final String nameProduct = getCursor().getString(productNameColumnIndex);
-        final String priceProduct = getCursor().getString(priceColumnIndex);
-        final String quantityProduct = getCursor().getString(quantityColumnIndex);
+        final String nameProduct = cursor.getString(productNameColumnIndex);
+        final int priceProduct = cursor.getInt(priceColumnIndex);
+        final int quantityProduct = cursor.getInt(quantityColumnIndex);
+
+        productSale.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View view){
+
+                int leftQuantity = quantityProduct;
+
+                if (leftQuantity <= 0){
+                    int newActualQuantity = leftQuantity - 1;
+
+
+                    Toast.makeText(context, context.getString(R.string.sale_error)+
+                            nameProduct + context.getString(R.string.no_stock) +
+                            newActualQuantity, Toast.LENGTH_SHORT).show();
+                } else {
+                    leftQuantity --;
+                    int newActualQuantity = leftQuantity;
+                    Toast.makeText(context, context.getString(R.string.sale_successful) +
+                            nameProduct + context.getString(R.string.remaining_quantity) + newActualQuantity, Toast.LENGTH_SHORT).show();
+                }
+
+
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(InventoryEntry.COLUMN_QUANTITY, leftQuantity);
+
+                Uri uri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, product_Id);
+
+                context.getContentResolver().update(uri, contentValues, null, null);
+
+                productQuantityTextView.setText(quantityProduct + " Products Still Left");
+
+            }
+
+        });
 
         productNameTextView.setText(nameProduct);
         productPriceTextView.setText("Price" + " : " + priceProduct + "  " + "€");
         productQuantityTextView.setText("Quantity" + " : " + quantityProduct);
-
-        final int idColumnIndex = getCursor().getInt(getCursor().getColumnIndex(InventoryEntry._ID));
-        final int actualQuantityIndex = getCursor().getInt(getCursor().getColumnIndex(InventoryEntry.COLUMN_QUANTITY));
-        final int actualQuantity = Integer.valueOf(getCursor().getString(actualQuantityIndex));
-
-        productSale.setOnClickListener(new View.OnClickListener() {
-            public void onClick (View view){
-                if (actualQuantity > 0){
-                    int newActualQuantity = actualQuantity - 1;
-                    Uri quantityUri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, idColumnIndex);
-
-                    ContentValues values = new ContentValues();
-                    values.put(InventoryEntry.COLUMN_QUANTITY, newActualQuantity);
-                    context.getContentResolver().update(quantityUri, values, null, null);
-
-                    Toast.makeText(context, context.getString(R.string.sale_successful)+
-                            nameProduct + context.getString(R.string.remaining_quantity) +
-                            newActualQuantity, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, context.getString(R.string.sale_error) +
-                            nameProduct + context.getString(R.string.no_stock), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-        });
     }
 }

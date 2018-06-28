@@ -54,9 +54,9 @@
     <!-- Toast message in editor when current product  has failed to be deleted [CHAR LIMIT=NONE] -->
     <string name="editor_delete_product_failed">Error with deleting product</string>
     <string name="sale_successful">Sale successful! \nNew quantity of the product </string>
-    <string name="remaining_quantity">is: </string>
+    <string name="remaining_quantity">\nIs: </string>
     <string name="sale_error">Sale can&amp;t be made because </string>
-    <string name="no_stock">out of stock!</string>
+    <string name="no_stock">\nOut of stock!</string>
     <string name="empty_field_error">This field cannot be empty! Please enter a value!</string>
     <string name="enter_value_into_field">The field must have an entry!</string>
     </resources>

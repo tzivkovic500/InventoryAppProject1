@@ -172,7 +172,6 @@ public class EditorActivity extends AppCompatActivity implements
         String productNameString = productNameEditText.getText().toString().trim();
         String priceString = priceEditText.getText().toString().trim();
         String quantityString = quantityEditText.getText().toString().trim();
-        int quantity = Integer.parseInt(quantityString);
         String supplierNameString = supplierNameEditText.getText().toString().trim();
         String supplierPhoneNumberString = supplierPhoneNumberEditText.getText().toString().trim();
         // Check if this is supposed to be a new product
@@ -190,7 +189,6 @@ public class EditorActivity extends AppCompatActivity implements
         // and product attributes from the editor are the values.
         ContentValues values = new ContentValues();
         values.put(InventoryEntry.COLUMN_PRODUCT_NAME, productNameString);
-        values.put(InventoryEntry.COLUMN_QUANTITY, quantity);
         values.put(InventoryEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
         values.put(InventoryEntry.COLUMN_SUPPLIER_PHONE_NUMBER, supplierPhoneNumberString);
 
@@ -201,6 +199,13 @@ public class EditorActivity extends AppCompatActivity implements
             price = Integer.parseInt(priceString);
         }
         values.put(InventoryEntry.COLUMN_PRICE, price);
+
+        int quantity = 0;
+        if (!TextUtils.isEmpty(quantityString)) {
+            quantity = Integer.parseInt(quantityString);
+        }
+        values.put(InventoryEntry.COLUMN_QUANTITY, quantity);
+
 
         // Determine if this is a new or existing product by checking if mCurrentInventoryUri is null or not
         if (mCurrentInventoryUri == null) {
