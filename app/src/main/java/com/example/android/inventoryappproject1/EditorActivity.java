@@ -171,22 +171,17 @@ public class EditorActivity extends AppCompatActivity implements
         // Use trim to eliminate leading or trailing white space
         String productNameString = productNameEditText.getText().toString().trim();
         String priceString = priceEditText.getText().toString().trim();
-        int price = Integer.parseInt(priceString);
         String quantityString = quantityEditText.getText().toString().trim();
         int quantity = Integer.parseInt(quantityString);
         String supplierNameString = supplierNameEditText.getText().toString().trim();
         String supplierPhoneNumberString = supplierPhoneNumberEditText.getText().toString().trim();
-
-
-
-
         // Check if this is supposed to be a new product
         // and check if all the fields in the editor are blank
         if (mCurrentInventoryUri == null &&
                 TextUtils.isEmpty(productNameString) ||  TextUtils.isEmpty(priceString) ||
                 TextUtils.isEmpty(quantityString) ||  TextUtils.isEmpty(supplierNameString) ||
                 TextUtils.isEmpty(supplierPhoneNumberString)) {
-            Toast.makeText(this, "All fields are requaired", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             // Since no fields were modified, we can return early without creating a new product.
             // No need to create ContentValues and no need to do any ContentProvider operations.
             return;
@@ -195,12 +190,17 @@ public class EditorActivity extends AppCompatActivity implements
         // and product attributes from the editor are the values.
         ContentValues values = new ContentValues();
         values.put(InventoryEntry.COLUMN_PRODUCT_NAME, productNameString);
-        values.put(InventoryEntry.COLUMN_PRICE, price);
         values.put(InventoryEntry.COLUMN_QUANTITY, quantity);
         values.put(InventoryEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
         values.put(InventoryEntry.COLUMN_SUPPLIER_PHONE_NUMBER, supplierPhoneNumberString);
 
-
+        // If the price is not provided by the user, don't try to parse the string into an
+        // integer value. Use 0 by default.
+        int price = 0;
+        if (!TextUtils.isEmpty(priceString)) {
+            price = Integer.parseInt(priceString);
+        }
+        values.put(InventoryEntry.COLUMN_PRICE, price);
 
         // Determine if this is a new or existing product by checking if mCurrentInventoryUri is null or not
         if (mCurrentInventoryUri == null) {
