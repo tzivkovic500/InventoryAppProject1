@@ -185,6 +185,7 @@ public class EditorActivity extends AppCompatActivity implements
             // No need to create ContentValues and no need to do any ContentProvider operations.
             return;
         }
+
         // Create a ContentValues object where column names are the keys,
         // and product attributes from the editor are the values.
         ContentValues values = new ContentValues();

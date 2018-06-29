@@ -59,5 +59,6 @@
     <string name="no_stock">\nOut of stock!</string>
     <string name="empty_field_error">This field cannot be empty! Please enter a value!</string>
     <string name="enter_value_into_field">The field must have an entry!</string>
+    <string name="no_field_modification">The fields weren&amp;t modified</string>
     </resources>
 
