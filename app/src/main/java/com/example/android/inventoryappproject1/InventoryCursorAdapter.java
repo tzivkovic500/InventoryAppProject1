@@ -66,11 +66,8 @@ public class InventoryCursorAdapter extends CursorAdapter {
             public void onClick (View view){
 
                 int leftQuantity = quantityProduct;
-
                 if (leftQuantity <= 0){
                     int newActualQuantity = leftQuantity - 1;
-
-
                     Toast.makeText(context, context.getString(R.string.sale_error)+
                             nameProduct + context.getString(R.string.no_stock) +
                             newActualQuantity, Toast.LENGTH_SHORT).show();
@@ -80,7 +77,6 @@ public class InventoryCursorAdapter extends CursorAdapter {
                     Toast.makeText(context, context.getString(R.string.sale_successful) +
                             nameProduct + context.getString(R.string.remaining_quantity) + newActualQuantity, Toast.LENGTH_SHORT).show();
                 }
-
 
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(InventoryEntry.COLUMN_QUANTITY, leftQuantity);
